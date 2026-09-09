@@ -1,0 +1,68 @@
+OP_RETURN MAILBOX READER LICENSE
+
+Paolo Monti © 2026. All rights reserved.
+
+By downloading, installing, copying, or using OP_RETURN Mailbox Reader
+(the "Software"), you agree to the following terms.
+
+1. NON-COMMERCIAL LICENSE GRANT
+
+Paolo Monti grants you a personal, limited, non-exclusive, non-transferable,
+and revocable license to download, install, and run the Software free of charge
+solely for personal, educational, or research purposes that are entirely
+non-commercial.
+
+2. COMMERCIAL USE PROHIBITED
+
+The Software may not be used, directly or indirectly, for any commercial,
+professional, revenue-generating, or for-profit activity without prior written
+authorization from Paolo Monti. This restriction includes use within a paid
+product or service, paid consulting, resale, rental, licensing, or any activity
+performed for commercial advantage or monetary compensation.
+
+3. EXECUTABLE INTEGRITY
+
+You may not modify, alter, patch, transform, repack, recompress, remove or
+replace resources, bypass protection or integrity checks, or create modified
+versions of any executable file distributed with the Software.
+
+4. REDISTRIBUTION
+
+You may not publish, upload, mirror, sublicense, sell, rent, transfer, bundle,
+or otherwise redistribute the Software, whether modified or unmodified,
+without prior written authorization from Paolo Monti.
+
+5. OWNERSHIP
+
+The Software is licensed, not sold. Paolo Monti retains all rights, title, and
+interest in the Software. No rights are granted except those expressly stated
+in this license.
+
+6. TERMINATION
+
+This license terminates automatically if you breach any of its terms. Upon
+termination, you must stop using the Software and delete all copies in your
+possession or control.
+
+7. DISCLAIMER OF WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTIES OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, ACCURACY, RELIABILITY, OR NON-INFRINGEMENT. YOU USE
+THE SOFTWARE ENTIRELY AT YOUR OWN RISK.
+
+8. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PAOLO MONTI SHALL NOT BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY,
+OR OTHER DAMAGES, INCLUDING LOSS OF DATA, FUNDS, PROFITS, BUSINESS, OR USE,
+ARISING FROM OR RELATED TO THE SOFTWARE OR ITS USE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+9. WRITTEN AUTHORIZATION
+
+Any permission for commercial use, redistribution, or another use outside this
+license must be granted in writing by Paolo Monti. Silence or failure to respond
+does not constitute authorization.
+
+If you do not agree to these terms, do not use or distribute the Software.
