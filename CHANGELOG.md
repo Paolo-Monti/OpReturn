@@ -2,6 +2,22 @@
 
 All notable changes to OP_RETURN Mailbox Reader are documented in this file.
 
+## 1.2 - 2026-09-09
+
+### Added
+
+- Adaptive internal pagination based on the current console window height and
+  width.
+- Interactive pager controls: Space advances one page, Enter advances one line,
+  and `q` or Escape stops the program normally.
+- The `-d` and `--no-pager` options for disabling internal pagination.
+
+### Changed
+
+- Internal pagination is enabled by default for interactive console sessions
+  and disabled automatically for redirected input or output.
+- The application version is now 1.2.
+
 ## 1.1 - 2026-09-09
 
 ### Added
