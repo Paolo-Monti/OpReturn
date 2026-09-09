@@ -7,7 +7,9 @@ address.
 The application is read-only. It does not create transactions, send Bitcoin,
 or require a wallet, seed phrase, or private key.
 
-Copyright: Paolo Monti © 2026
+Copyright: Paolo Monti (C) 2026
+
+Current version: 1.2
 
 ## Main features
 
@@ -22,6 +24,8 @@ Copyright: Paolo Monti © 2026
 - Displays non-textual data in hexadecimal form.
 - Shows the block height inside square brackets.
 - Filters messages by one height, a comma-separated list, or height ranges.
+- Paginates long console output automatically according to the current window
+  size.
 - Classifies how each transaction is related to the requested address.
 - Exports decoded records to JSON and CSV files.
 - Verifies complete OpenPGP messages through GnuPG when requested.
@@ -64,14 +68,18 @@ Display messages from selected block heights:
 OpReturn.exe bc1q... -l 966087,966091-966100
 ```
 
-Paginate long output with the Windows `more` command:
+Long console output is paginated automatically. At the prompt, press Space for
+the next page, Enter for one more line, or `q` to stop the program normally.
+
+Disable internal pagination when needed:
 
 ```text
-OpReturn.exe bc1q... | more
+OpReturn.exe bc1q... -d
 ```
 
-Press `q` to stop displaying results. Closing the pager is treated as a normal
-interruption and does not produce an I/O error.
+Pagination is automatically disabled when standard output or standard input is
+redirected. Commands that write to a file or pipe therefore remain suitable for
+scripts.
 
 Export decoded messages:
 
@@ -81,6 +89,30 @@ OpReturn.exe bc1q... -j mailbox.json -c mailbox.csv
 
 Export filenames must not already exist. The application does not overwrite
 existing export files.
+
+## Adaptive internal pagination
+
+Internal pagination is enabled by default when both standard input and standard
+output are connected to an interactive Windows console. The application uses
+the visible width and height of the console to determine how many physical
+lines fit on each page. Wrapped text and line breaks contained in decoded
+messages are included in this calculation.
+
+The internal prompt supports these keys:
+
+- Space: display the next page using the current console dimensions.
+- Enter: display one additional line.
+- `q` or Escape: stop the application normally with exit code `0`.
+
+Use `-d` or `--no-pager` to disable pagination explicitly:
+
+```text
+OpReturn.exe bc1q... --no-pager
+```
+
+The application does not launch the Windows `more` command. Pagination is
+disabled automatically when input or output is redirected, so file output,
+pipes, and scripts do not wait for keyboard input.
 
 ## Options
 
@@ -105,6 +137,7 @@ existing export files.
 -c, --save-csv FILE               Export decoded records to CSV
 -m, --max-pages N                 Limit history pages; 0 means all pages
 -l, --height SPEC                 Filter heights, for example 100,105-110
+-d, --no-pager                    Disable adaptive console pagination
 -n, --no-color                    Disable console colors
 -r, --self-test                   Run internal offline tests
 -h, --help                        Display help
