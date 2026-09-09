@@ -13,12 +13,15 @@ Copyright: Paolo Monti © 2026
 
 - Retrieves confirmed transactions and transactions still in the mempool.
 - Uses Mempool by default and Blockstream as a fallback provider.
+- Supports API-key authentication for custom compatible services.
+- Supports HTTP and HTTPS proxies, including authenticated proxies.
 - Reads all available transaction history, page by page.
 - Finds every `OP_RETURN` output in the retrieved transactions.
 - Interprets UTF-8 Unicode text, accented characters, and emoji.
 - Converts `\n`, `\r\n`, and `\u000A` sequences into actual line breaks.
 - Displays non-textual data in hexadecimal form.
 - Shows the block height inside square brackets.
+- Filters messages by one height, a comma-separated list, or height ranges.
 - Classifies how each transaction is related to the requested address.
 - Exports decoded records to JSON and CSV files.
 - Verifies complete OpenPGP messages through GnuPG when requested.
@@ -28,6 +31,7 @@ Copyright: Paolo Monti © 2026
 - 64-bit Windows.
 - An Internet connection for online queries.
 - GnuPG is optional and is required only for `--verify-pgp`.
+- An API key is not required for the default Mempool and Blockstream providers.
 
 ## Installation
 
@@ -54,6 +58,12 @@ Display hexadecimal payloads:
 OpReturn.exe bc1q... -x
 ```
 
+Display messages from selected block heights:
+
+```text
+OpReturn.exe bc1q... -l 966087,966091-966100
+```
+
 Paginate long output with the Windows `more` command:
 
 ```text
@@ -78,6 +88,13 @@ existing export files.
 -p, --provider auto|mempool|blockstream
                                   Select the Bitcoin data provider
 -u, --api HTTPS_URL               Use a custom compatible API
+-k, --api-key KEY                 Supply an API key directly
+-e, --api-key-env NAME            Read the API key from an environment variable
+-w, --api-key-header NAME         Set the authentication header name
+-b, --api-key-prefix TEXT         Set the authentication value prefix
+-q, --proxy URL                   Use an HTTP or HTTPS proxy
+-a, --proxy-user USER             Set the proxy user name
+-o, --proxy-password-env NAME     Read the proxy password from an environment variable
 -t, --tx TXID                     Read one associated transaction
 -f, --file transactions.json     Read transactions from an offline JSON file
 -x, --hex                         Display the hexadecimal payload
@@ -87,6 +104,7 @@ existing export files.
 -j, --save-json FILE              Export decoded records to JSON
 -c, --save-csv FILE               Export decoded records to CSV
 -m, --max-pages N                 Limit history pages; 0 means all pages
+-l, --height SPEC                 Filter heights, for example 100,105-110
 -n, --no-color                    Disable console colors
 -r, --self-test                   Run internal offline tests
 -h, --help                        Display help
@@ -96,6 +114,57 @@ existing export files.
 as its corresponding long option. Help and self-test are the only operations
 that do not require a Bitcoin address.
 Do not use `--address`; provide the address directly as the first argument.
+
+## Custom API authentication
+
+The default Mempool and Blockstream providers do not require an API key. API
+authentication is available only with a custom HTTPS endpoint selected through
+`--api` or `-u`.
+
+Reading the key from an environment variable is recommended because a key
+written directly on the command line may remain visible in command history or
+in the process list:
+
+```text
+set OPRETURN_API_KEY=your-key
+OpReturn.exe bc1q... -u https://api.example.com/api -e OPRETURN_API_KEY
+```
+
+The default request header is `Authorization: Bearer your-key`. Services that
+expect a raw custom header can be selected by specifying its name; when the
+header name is changed and no prefix is supplied, the key is sent without a
+prefix:
+
+```text
+OpReturn.exe bc1q... -u https://api.example.com/api -e OPRETURN_API_KEY -w X-API-Key
+```
+
+For another authorization scheme, set the prefix explicitly:
+
+```text
+OpReturn.exe bc1q... -u https://api.example.com/api -e OPRETURN_API_KEY -b Token
+```
+
+The key is never written to normal or verbose application output.
+
+## Proxy configuration
+
+Use `--proxy` or `-q` with an HTTP or HTTPS proxy URL:
+
+```text
+OpReturn.exe bc1q... -q http://127.0.0.1:8080
+```
+
+For an authenticated proxy, pass the user name and read the password from an
+environment variable:
+
+```text
+set OPRETURN_PROXY_PASSWORD=your-password
+OpReturn.exe bc1q... -q http://proxy.example.com:8080 -a proxy-user -o OPRETURN_PROXY_PASSWORD
+```
+
+Credentials embedded in the proxy URL are rejected. The proxy password is
+never written to application output.
 
 ## Understanding the output
 
@@ -115,6 +184,21 @@ Example:
 
 Verbose mode also displays the transaction ID and the output index. The `--hex`
 option displays the original payload bytes in hexadecimal form.
+
+## Filtering by block height
+
+Use `--height` or `-l` to display and export only messages confirmed at selected
+block heights. The option accepts:
+
+- One height: `-l 966087`
+- Separate heights: `-l 966087,966091,966100`
+- An inclusive range: `-l 966087-966100`
+- A combination: `-l 966087,966091-966100,966150`
+
+When this filter is active, pending mempool messages are excluded because they
+do not yet have a block height. Online address mode still reads the available
+history before applying the filter. A `--max-pages` limit can therefore exclude
+older matching blocks from the retrieved data.
 
 ## Offline JSON files
 
